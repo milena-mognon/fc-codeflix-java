@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.fullcyccle.admin.catalogo.domain.CategoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-07-23T18:39:12" hostname="Milena" time="0.021">
-  <properties/>
-  <testcase name="testNewCategory()" classname="com.fullcyccle.admin.catalogo.domain.CategoryTest" time="0.021"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
