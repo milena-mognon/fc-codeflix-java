@@ -1,4 +1,4 @@
-package com.fullcyccle.admin.catalogo.domain.category;
+package com.fullcyccle.admin.catalogo.domain;
 
 import java.util.Objects;
 

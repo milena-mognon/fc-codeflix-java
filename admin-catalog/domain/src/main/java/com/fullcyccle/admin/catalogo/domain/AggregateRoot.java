@@ -1,4 +1,4 @@
-package com.fullcyccle.admin.catalogo.domain.category;
+package com.fullcyccle.admin.catalogo.domain;
 
 public class AggregateRoot<ID extends Identifier> extends Entity<ID> {
   
