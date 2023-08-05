@@ -1,10 +1,11 @@
 package com.fullcyccle.admin.catalogo.domain.category;
 
+import com.fullcyccle.admin.catalogo.domain.AggregateRoot;
+
 import java.time.Instant;
 import java.util.UUID;
 
-public class Category {
-  private final UUID id;
+public class Category extends AggregateRoot<CategoryID> {
   private final String name;
   private final String description;
   private final boolean active;
@@ -14,31 +15,31 @@ public class Category {
   // Instant (marco no tempo - preciso - UTC - não leva em conta o timezone) x LocaDateTime (data normal)
   // final - imutável
   
-  private Category(
-      final UUID id,
-      final String name,
-      final String description,
-      final boolean active,
-      final Instant createdAt,
-      final Instant updatedAt,
-      final Instant deletedAt
+  public Category(
+      final CategoryID anId,
+      final String aName,
+      final String aDescription,
+      final boolean isActive,
+      final Instant aCreationDate,
+      final Instant aUpdateDate,
+      final Instant aDeleteDate
   ) {
-    this.name = name;
-    this.id = id;
-    this.description = description;
-    this.active = active;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
-    this.deletedAt = deletedAt;
+    super(anId);
+    this.name = aName;
+    this.description = aDescription;
+    this.active = isActive;
+    this.createdAt = aCreationDate;
+    this.updatedAt = aUpdateDate;
+    this.deletedAt = aDeleteDate;
   }
   
   public static Category newCategory(final String aName, final String sDescription, final boolean aActive) {
-    final var id = UUID.randomUUID();
+    final var id = CategoryID.unique();
     final var now = Instant.now();
     return new Category(id, aName, sDescription, aActive, now, now, null);
   }
   
-  public UUID getId() {
+  public CategoryID getId() {
     return id;
   }
   
