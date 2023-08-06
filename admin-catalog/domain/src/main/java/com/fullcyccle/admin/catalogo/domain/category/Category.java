@@ -33,10 +33,11 @@ public class Category extends AggregateRoot<CategoryID> {
     this.deletedAt = aDeleteDate;
   }
   
-  public static Category newCategory(final String aName, final String sDescription, final boolean aActive) {
+  public static Category newCategory(final String aName, final String aDescription, final boolean isActive) {
     final var id = CategoryID.unique();
     final var now = Instant.now();
-    return new Category(id, aName, sDescription, aActive, now, now, null);
+    final var deletedAt = isActive ? null : now;
+    return new Category(id, aName, aDescription, isActive, now, now, deletedAt);
   }
   
   @Override
