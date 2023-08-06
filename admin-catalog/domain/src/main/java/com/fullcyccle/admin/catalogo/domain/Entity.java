@@ -1,5 +1,7 @@
 package com.fullcyccle.admin.catalogo.domain;
 
+import com.fullcyccle.admin.catalogo.domain.validation.ValidationHandler;
+
 import java.util.Objects;
 
 public abstract class Entity<ID extends Identifier> {
@@ -9,6 +11,9 @@ public abstract class Entity<ID extends Identifier> {
     Objects.requireNonNull(id, "'id' should not be null");
     this.id = id;
   }
+  
+  /** Todos que estendem Entity implementem esse método */
+  public abstract void validate(ValidationHandler handler);
   
   public ID getId() {
     return id;
