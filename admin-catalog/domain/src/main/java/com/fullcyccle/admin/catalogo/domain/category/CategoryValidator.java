@@ -7,9 +7,9 @@ import com.fullcyccle.admin.catalogo.domain.validation.Validator;
 /**
  * Validator não está dentro da entidade, pois ele tende a sofrer mais
  * modificações que a entidade.
- * Entretanto, para respeitar o DDD, a entidade precisa saber se validar, 
+ * Entretanto, para respeitar o DDD, a entidade precisa saber se validar,
  * por isso ele deve ser chamado dentro da entidade
- * */
+ */
 public class CategoryValidator extends Validator {
   public static final int NAME_MAX_LENGTH = 255;
   public static final int MIN_NAME_LENGTH = 3;
