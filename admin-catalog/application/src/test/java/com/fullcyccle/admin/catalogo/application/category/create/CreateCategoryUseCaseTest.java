@@ -48,7 +48,7 @@ public class CreateCategoryUseCaseTest {
     when(categoryGateway.create(any()))
         .thenAnswer(returnsFirstArg());
     
-    final var actualOutput = useCase.execute(aCommand);
+    final var actualOutput = useCase.execute(aCommand).get(); // Pega o valor retornado
     
     Assertions.assertNotNull(actualOutput);
     Assertions.assertNotNull(actualOutput.id());
@@ -78,8 +78,10 @@ public class CreateCategoryUseCaseTest {
     final var aCommand = CreateCategoryCommand.with(
         expectedName, expectedDescription, expectedIsActive);
     
-    final var actionException = Assertions.assertThrows(DomainException.class, () -> useCase.execute(aCommand));
-    Assertions.assertEquals(expectedErrorMessage, actionException.getMessage());
+    final var notification = useCase.execute(aCommand).getLeft();
+    
+    Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
+    Assertions.assertEquals(expectedErrorMessage, notification.firstError().message());
     
     // verificar que isso realmente não foi chamado
     verify(categoryGateway, times(0)).create(any());
@@ -101,7 +103,7 @@ public class CreateCategoryUseCaseTest {
     when(categoryGateway.create(any()))
         .thenAnswer(returnsFirstArg());
     
-    final var actualOutput = useCase.execute(aCommand);
+    final var actualOutput = useCase.execute(aCommand).get();
     
     Assertions.assertNotNull(actualOutput);
     Assertions.assertNotNull(actualOutput.id());
@@ -126,6 +128,7 @@ public class CreateCategoryUseCaseTest {
     final var expectedDescription = "A categoria mais assistida";
     final var expectedIsActive = true;
     final var expectedErrorMessage = "Gateway Error";
+    final var expectedErrorCount = 1;
     
     // Command é usado para dar semântica ao nome, poderia ser outro nome, como CreateCategoryInput
     final var aCommand = CreateCategoryCommand.with(
@@ -137,8 +140,10 @@ public class CreateCategoryUseCaseTest {
     when(categoryGateway.create(any()))
         .thenThrow(new IllegalStateException(expectedErrorMessage));
     
-    final var actionException = Assertions.assertThrows(IllegalStateException.class, () -> useCase.execute(aCommand));
-    Assertions.assertEquals(expectedErrorMessage, actionException.getMessage());
+    final var notification = useCase.execute(aCommand).getLeft();
+    
+    Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
+    Assertions.assertEquals(expectedErrorMessage, notification.firstError().message());
     
     // verifica que foi chamado uma vez com os parâmetros certos
     verify(categoryGateway, times(1)).create(argThat(aCategory ->

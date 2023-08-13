@@ -11,6 +11,10 @@ repositories {
 
 dependencies {
     implementation((project(":domain")))
+
+    // https://mvnrepository.com/artifact/io.vavr/vavr
+    implementation 'io.vavr:vavr:0.10.4'
+
     testImplementation platform('org.junit:junit-bom:5.9.1')
     // https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter
     testImplementation 'org.mockito:mockito-junit-jupiter:5.4.0'
