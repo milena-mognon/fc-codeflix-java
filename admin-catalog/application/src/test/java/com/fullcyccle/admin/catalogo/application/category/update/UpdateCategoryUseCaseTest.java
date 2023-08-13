@@ -29,6 +29,7 @@ public class UpdateCategoryUseCaseTest {
   public void givenAValidCommand_whenCallsUpdateCategory_shouldReturnCategoryId() {
     final var aCategory = Category.newCategory("Film", null, true);
     
+    
     final var expectedName = "Filmes";
     final var expectedDescription = "A Categoria mais assistida";
     final var expectedIsActive = true;
@@ -43,7 +44,7 @@ public class UpdateCategoryUseCaseTest {
     
     // Quando chamar find by id passando o expectedId, vai retorna a categoria
     when(categoryGateway.findById(eq(expectedId)))
-        .thenReturn(Optional.of(aCategory));
+        .thenReturn(Optional.of(aCategory.clone()));
     
     // quando chamar o método update, passando qualquer valor, retorna o que veio na entrada
     when(categoryGateway.update(any()))
@@ -61,8 +62,7 @@ public class UpdateCategoryUseCaseTest {
             && Objects.equals(expectedIsActive, aUpdatedCategory.isActive())
             && Objects.equals(expectedId, aUpdatedCategory.getId())
             && Objects.equals(aCategory.getCreatedAt(), aUpdatedCategory.getCreatedAt())
-            && Objects.equals(aCategory.getUpdatedAt(), aUpdatedCategory.getUpdatedAt())
-            // && aCategory.getUpdatedAt().isBefore(aUpdatedCategory.getUpdatedAt()) // TODO: FIX ASSERTION
+            && aCategory.getUpdatedAt().isBefore(aUpdatedCategory.getUpdatedAt())
             && Objects.isNull(aUpdatedCategory.getDeletedAt())
     ));
   }
