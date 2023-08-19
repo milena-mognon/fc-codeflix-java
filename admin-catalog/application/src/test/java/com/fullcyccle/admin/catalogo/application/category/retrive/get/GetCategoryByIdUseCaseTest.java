@@ -1,4 +1,4 @@
-package com.fullcyccle.admin.catalogo.application.category.retrive;
+package com.fullcyccle.admin.catalogo.application.category.retrive.get;
 
 import com.fullcyccle.admin.catalogo.domain.category.Category;
 import com.fullcyccle.admin.catalogo.domain.category.CategoryGateway;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -43,12 +42,12 @@ public class GetCategoryByIdUseCaseTest {
     when(categoryGateway.findById(eq(expectedId)))
         .thenReturn(Optional.of(aCategory.clone()));
     
-    final var actualCategory = useCase.execute(expectedId);
+    final var actualCategory = useCase.execute(expectedId.getValue());
     
     Assertions.assertEquals(expectedId, actualCategory.id());
     Assertions.assertEquals(expectedName, actualCategory.name());
     Assertions.assertEquals(expectedDescription, actualCategory.description());
-    Assertions.assertEquals(expectedIsActive, actualCategory.isASctive());
+    Assertions.assertEquals(expectedIsActive, actualCategory.isActive());
     Assertions.assertEquals(aCategory.getCreatedAt(), actualCategory.createdAt());
     Assertions.assertEquals(aCategory.getUpdatedAt(), actualCategory.updatedAt());
     Assertions.assertEquals(aCategory.getDeletedAt(), actualCategory.deletedAt());
@@ -57,9 +56,9 @@ public class GetCategoryByIdUseCaseTest {
   }
   
   @Test
-  public void givenAInvalidId_whenCallsGetCategory_shouldRetornNotFound() {
+  public void givenAInvalidId_whenCallsGetCategory_shouldReturnNotFound() {
     final var expectedId = CategoryID.from("123");
-    final var expectedErrorMessage = "'name' should not be null";
+    final var expectedErrorMessage = "Category with ID 123 was not found";
     final var expectedErrorCount = 1;
     
     when(categoryGateway.findById(eq(expectedId)))
@@ -78,13 +77,11 @@ public class GetCategoryByIdUseCaseTest {
   
   @Test
   public void givenAValidId_whenGatewayThrowsError_shouldReturnException() {
-    final var expectedErrorMessage = "'name' should not be null";
-    
-    final var aCategory = Category.newCategory("Filme", "A categoria mais assistida", true);
-    final var expectedId = aCategory.getId();
+    final var expectedErrorMessage = "Gateway Error";
+    final var expectedId = CategoryID.from("123");
     
     when(categoryGateway.findById(eq(expectedId)))
-        .thenThrow(new IllegalStateException("Gateway Error"));
+        .thenThrow(new IllegalStateException(expectedErrorMessage));
     
     final var actualException = Assertions.assertThrows(IllegalStateException.class,
                                                         () -> useCase.execute(expectedId.getValue()));
