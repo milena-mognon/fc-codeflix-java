@@ -3,6 +3,7 @@ package com.fullcyccle.admin.catalogo.application.category.create;
 import com.fullcyccle.admin.catalogo.domain.category.CategoryGateway;
 import com.fullcyccle.admin.catalogo.domain.exceptions.DomainException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,6 +32,12 @@ public class CreateCategoryUseCaseTest {
    */
   @Mock
   private CategoryGateway categoryGateway;
+  
+  // toda vez antes de iniciar um teste esse método será chamado
+  @BeforeEach
+  void cleanUp() {
+    Mockito.reset(categoryGateway);
+  }
   
   @Test
   public void givenAValidCommand_whenCallsCreateCategory_shouldReturnCategoryId() {
