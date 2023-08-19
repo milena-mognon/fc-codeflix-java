@@ -37,7 +37,7 @@ public class DeleteCategoryUseCaseTest {
     // ou é possível mocar da seguinte forma
     doNothing().when(categoryGateway).deleteById(eq(expectedId));
     
-    Assertions.assertDoesNotThrow(() -> useCase.execute(expectedId.getValue());
+    Assertions.assertDoesNotThrow(() -> useCase.execute(expectedId.getValue()));
     
     verify(categoryGateway, times(1)).deleteById(eq(expectedId));
   }
@@ -48,7 +48,7 @@ public class DeleteCategoryUseCaseTest {
     
     doNothing().when(categoryGateway).deleteById(eq(expectedId));
     
-    Assertions.assertDoesNotThrow(() -> useCase.execute(expectedId.getValue());
+    Assertions.assertDoesNotThrow(() -> useCase.execute(expectedId.getValue()));
     
     verify(categoryGateway, times(1)).deleteById(eq(expectedId));
   }
@@ -60,7 +60,7 @@ public class DeleteCategoryUseCaseTest {
     doThrow(new IllegalStateException("Gateway Error"))
         .when(categoryGateway).deleteById(eq(expectedId));
     
-    Assertions.assertThrows(IllegalStateException.class, () -> useCase.execute(expectedId.getValue());
+    Assertions.assertThrows(IllegalStateException.class, () -> useCase.execute(expectedId.getValue()));
     
     verify(categoryGateway, times(1)).deleteById(eq(expectedId));
   }
