@@ -1,9 +1,20 @@
 plugins {
     id 'java'
+    id 'application' // torna a aplicação uma "aplicação java" para que possa ser executada como um java app
+    id 'org.springframework.boot' version '3.1.2' // inclui o spring framework como plugin (2.6.7 versão usada no curso)
+    // e traz com ele as versões das bibliotecas mais recentes e algumas tasks importantes
+    id 'io.spring.dependency-management' version '1.1.3' // versão usada no curso 1.0.11.RELEASE
+    // inclui as dependências/versões que o spring utiliza automaticamente nas dependências abaixo
 }
 
 group = 'com.fullcyccle.admin.catalogo.infrastructure'
 version = '1.0-SNAPSHOT'
+
+// não é uma configuração obrigatória, mas como está o projeto possui módulos e quero que o jar fique na raiz é uma configuração necessária
+bootJar {
+    archiveFileName = 'application.jar'
+    destinationDirectory.set(file("${rootProject.buildDir}/libs"))
+}
 
 repositories {
     mavenCentral()
@@ -13,8 +24,16 @@ dependencies {
     implementation((project(":domain")))
     implementation((project(":application")))
 
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    // configura o módulo web MVC, mas exclui o starter do tomcat
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+
+    // undertow será o substituto do tomcat
+    implementation('org.springframework.boot:spring-boot-starter-undertow')
+
+    // configura os testes
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
 test {
