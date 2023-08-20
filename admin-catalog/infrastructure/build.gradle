@@ -24,6 +24,8 @@ dependencies {
     implementation((project(":domain")))
     implementation((project(":application")))
 
+    implementation('com.mysql:mysql-connector-j')
+
     // configura o módulo web MVC, mas exclui o starter do tomcat
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude module: 'spring-boot-starter-tomcat'
@@ -31,6 +33,9 @@ dependencies {
 
     // undertow será o substituto do tomcat
     implementation('org.springframework.boot:spring-boot-starter-undertow')
+
+    // essa biblioteca que facilita a comunicação com abstrações do spring para persistir informações
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
 
     // configura os testes
     testImplementation('org.springframework.boot:spring-boot-starter-test')
