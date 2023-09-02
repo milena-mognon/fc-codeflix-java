@@ -16,7 +16,7 @@ public class Main {
      * e pegar as configurações que devem ser utilizadas na hora de subir a aplicação
      * */
     // System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "development");
-    System.setProperty(AbstractEnvironment.DEFAULT_PROFILES_PROPERTY_NAME, "test");
+    System.setProperty(AbstractEnvironment.DEFAULT_PROFILES_PROPERTY_NAME, "development");
     
     SpringApplication.run(WebServerConfig.class, args);
   }
