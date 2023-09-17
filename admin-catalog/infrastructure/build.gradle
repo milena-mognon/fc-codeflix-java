@@ -51,6 +51,8 @@ dependencies {
     // configura os testes
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 
+    testImplementation('org.flywaydb:flyway-core')
+
     // banco em memória h2 - deveria se testRuntimeOnly mas deu erro - implementation funciona
     testRuntimeOnly('com.h2database:h2')
 }
